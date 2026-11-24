@@ -1,14 +1,23 @@
-
 using UnityEngine;
 
 public class PlayerDataManager : MonoBehaviour
 {
-    public static PlayerDataManager Instance { get; private set; }
+    public static PlayerDataManager Instance
+    {
+        get;
+        private set;
+    }
 
-    public string PlayerName { get; private set; } = "Player";
+    [field: SerializeField]
+    public string PlayerName
+    {
+        get;
+        private set;
+    } = "Player";
 
     private void Awake()
     {
+        // Prevent duplicate data managers.
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -16,13 +25,23 @@ public class PlayerDataManager : MonoBehaviour
         }
 
         Instance = this;
+
+        // Keep player data when changing scenes.
         DontDestroyOnLoad(gameObject);
     }
 
     public void SetPlayerName(string newName)
     {
-        PlayerName = string.IsNullOrWhiteSpace(newName)
-            ? "Player"
-            : newName.Trim();
+        // Use a default name if nothing is entered.
+        if (string.IsNullOrWhiteSpace(newName))
+        {
+            PlayerName = "Player";
+        }
+        else
+        {
+            PlayerName = newName.Trim();
+        }
+
+        Debug.Log("Player Name Saved: " + PlayerName);
     }
 }
