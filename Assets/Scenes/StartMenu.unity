@@ -388,6 +388,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1235518db554d140a23f9f3d83792ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  <PlayerName>k__BackingField: Player
+  <BestPlayerName>k__BackingField: None
+  <BestScore>k__BackingField: 0
 --- !u!4 &100749253
 Transform:
   m_ObjectHideFlags: 0

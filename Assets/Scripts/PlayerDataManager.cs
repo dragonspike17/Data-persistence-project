@@ -15,9 +15,22 @@ public class PlayerDataManager : MonoBehaviour
         private set;
     } = "Player";
 
+    [field: SerializeField]
+    public string BestPlayerName
+    {
+        get;
+        private set;
+    } = "None";
+
+    [field: SerializeField]
+    public int BestScore
+    {
+        get;
+        private set;
+    } = 0;
+
     private void Awake()
     {
-        // Prevent duplicate data managers.
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -25,14 +38,11 @@ public class PlayerDataManager : MonoBehaviour
         }
 
         Instance = this;
-
-        // Keep player data when changing scenes.
         DontDestroyOnLoad(gameObject);
     }
 
     public void SetPlayerName(string newName)
     {
-        // Use a default name if nothing is entered.
         if (string.IsNullOrWhiteSpace(newName))
         {
             PlayerName = "Player";
@@ -43,5 +53,17 @@ public class PlayerDataManager : MonoBehaviour
         }
 
         Debug.Log("Player Name Saved: " + PlayerName);
+    }
+
+    public void UpdateHighScore(int currentScore)
+    {
+        if (currentScore > BestScore)
+        {
+            BestScore = currentScore;
+            BestPlayerName = PlayerName;
+
+            Debug.Log("New High Score: " + BestScore);
+            Debug.Log("Best Player: " + BestPlayerName);
+        }
     }
 }
