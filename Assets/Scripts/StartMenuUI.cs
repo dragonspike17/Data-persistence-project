@@ -7,31 +7,61 @@ public class StartMenuUI : MonoBehaviour
     [Header("Player Name")]
     public TMP_InputField playerNameInput;
 
+    [Header("High Score Display")]
+    public TMP_Text menuHighScoreText;
+
     [Header("Scene Settings")]
     public string gameSceneName = "main";
 
+    private void Start()
+    {
+        DisplayHighScore();
+    }
+
+    public void DisplayHighScore()
+    {
+        if (menuHighScoreText == null)
+        {
+            return;
+        }
+
+        if (PlayerDataManager.Instance != null)
+        {
+            menuHighScoreText.text =
+                "Best Score: " +
+                PlayerDataManager.Instance.BestPlayerName +
+                " - " +
+                PlayerDataManager.Instance.BestScore;
+        }
+        else
+        {
+            menuHighScoreText.text =
+                "Best Score: None - 0";
+        }
+    }
+
     public void StartGame()
     {
-        // Check that the data manager exists.
         if (PlayerDataManager.Instance == null)
         {
-            Debug.LogError("PlayerDataManager is missing!");
+            Debug.LogError(
+                "PlayerDataManager is missing!"
+            );
             return;
         }
 
-        // Check that the input field is assigned.
         if (playerNameInput == null)
         {
-            Debug.LogError("Player Name Input is not assigned!");
+            Debug.LogError(
+                "Player Name Input is not assigned!"
+            );
             return;
         }
 
-        // Save the player's name.
         PlayerDataManager.Instance.SetPlayerName(
             playerNameInput.text
         );
 
-        // Load the gameplay scene.
         SceneManager.LoadScene(gameSceneName);
     }
 
@@ -46,3 +76,4 @@ public class StartMenuUI : MonoBehaviour
 #endif
     }
 }
+
